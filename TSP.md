@@ -1,9 +1,9 @@
-# Experiment 12(d): Travelling Salesman Problem (TSP)
+# Exp No: 30
+# SEB : Travelling Salesman Problem (TSP)
 
 ## Aim
-To write a Python program to find the shortest possible route that visits every city exactly once and returns to the starting point using the Travelling Salesman Problem (TSP) approach.
 
----
+To write a Python program to find the shortest possible route that visits every city exactly once and returns to the starting point using the Travelling Salesman Problem (TSP) approach.
 
 ## Algorithm
 
@@ -28,14 +28,53 @@ To write a Python program to find the shortest possible route that visits every 
 7. **End the Program**:
    - Output the minimum cost and the corresponding route.
 
----
-
 ## Program
 ```
+from sys import maxsize
+from itertools import permutations
+V = 4
+
+def travellingSalesmanProblem(graph, s):
+
+
+	vertex = []
+	for i in range(V):
+		if i != s:
+			vertex.append(i)
+
+	min_path = maxsize
+	next_permutation=permutations(vertex)
+	for i in next_permutation:
+
+		current_pathweight = 0
+
+		k = s
+		for j in i:
+			current_pathweight += graph[k][j]
+			k = j
+		current_pathweight += graph[k][s]
+
+		# update minimum
+		min_path = min(min_path, current_pathweight)
+		
+	return min_path
+
+
+# Driver Code
+if __name__ == "__main__":
+
+	# matrix representation of graph
+	graph = [[0, 10, 15, 20], [10, 0, 35, 25],
+			[15, 35, 0, 30], [20, 25, 30, 0]]
+	s = int(input())
+	print(travellingSalesmanProblem(graph, s))
 
 ```
 
 ## OUTPUT
 
+![image](https://github.com/user-attachments/assets/7dfaa4e1-689f-4310-b569-6b4100078653)
 
 ## RESULT
+
+Thus the Python program to find the shortest possible route that visits every city exactly once and returns to the starting point using the Travelling Salesman Problem (TSP) approach was succesfully implemented.
