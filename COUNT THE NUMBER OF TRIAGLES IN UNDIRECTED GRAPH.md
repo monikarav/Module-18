@@ -1,38 +1,80 @@
-# Experiment 12(e): Count the Number of Triangles in an Undirected Graph
+# Exp No: 29
+# Applications of graph
 
-## AIM
-To write a Python program to count the number of triangles present in an undirected graph.
+## AIM:
 
----
+To find the minimum cost Hamiltonian cycle (shortest route that visits each city once and returns to the origin) for a Traveling Salesman Problem using a naive permutation-based solution.
 
-## Algorithm
+## ALGORITHM :
 
-1. **Input the Graph**:
-   - Start by taking the number of vertices as input.
-   - Represent the graph using an adjacency matrix where `graph[i][j]` indicates the presence of an edge between vertices `i` and `j`.
+Step 1: Input the number of cities (V = 4) and the cost matrix representing the graph.
 
-2. **Matrix Multiplication**:
-   - Initialize matrices `aux2` and `aux3` for storing the square and cube of the adjacency matrix respectively.
-   - Multiply the adjacency matrix (`graph`) with itself to compute `aux2 = graph^2`.
-   - Multiply the result (`aux2`) with the adjacency matrix again to compute `aux3 = graph^3`.
+Step 2: Create a list of all cities excluding the starting city s.
 
-3. **Trace Calculation**:
-   - The trace of a matrix is the sum of its diagonal elements. The diagonal elements of `aux3` represent the number of paths of length 3 starting and ending at each vertex.
-   - Compute the trace of `aux3` to find the total number of triangles.
+Step 3: Generate all permutations of the remaining cities to explore every possible tour.
 
-4. **Divide by 6**:
-   - The number of triangles is the trace of `aux3` divided by 6. This is because each triangle is counted six times in the trace.
+Step 4: Calculate the total travel cost starting from s, visiting cities in the order of the permutation, and returning to s.
 
-5. **Return the Result**:
-   - The program outputs the number of triangles present in the undirected graph.
+Step 5: Track the minimum cost of all possible Hamiltonian cycles.
 
----
+Step 6: Return the minimum path cost found among all permutations.
 
-## Program
+Step 7: Output the result as the shortest possible route starting and ending at city s.
+
+## PROGRAM :
+
 ```
+# Python3 program to implement traveling salesman
+# problem using naive approach.
+from sys import maxsize
+from itertools import permutations
+V = 4
+
+# implementation of traveling Salesman Problem
+def travellingSalesmanProblem(graph, s):
+
+	# store all vertex apart from source vertex
+	vertex = []
+	for i in range(V):
+		if i != s:
+			vertex.append(i)
+
+	# store minimum weight Hamiltonian Cycle
+	min_path = maxsize
+	next_permutation=permutations(vertex)
+	for i in next_permutation:
+
+		# store current Path weight(cost)
+		current_pathweight = 0
+
+		# compute current path weight
+		k = s
+		for j in i:
+			current_pathweight += graph[k][j]
+			k = j
+		current_pathweight += graph[k][s]
+
+		# update minimum
+		min_path = min(min_path, current_pathweight)
+		
+	return min_path
+
+
+# Driver Code
+if __name__ == "__main__":
+
+	# matrix representation of graph
+	graph = [[0, 10, 15, 20], [10, 0, 35, 25],
+			[15, 35, 0, 30], [20, 25, 30, 0]]
+	s = int(input())
+	print(travellingSalesmanProblem(graph, s))
 ```
 
-## OUTPUT
+## OUTPUT:
 
+![image](https://github.com/user-attachments/assets/dc770253-fda3-42c5-bca6-205eef5d06a2)
 
-## RESULT
+## RESULT :
+
+Thus the python program to find the minimum cost Hamiltonian cycle for a Traveling Salesman Problem using a naive permutation-based solution was successfully implemented.
+
